@@ -4,6 +4,7 @@ It automates the process of deploying new services or changes into an existing s
 anything declared inside the service definition (docker-compose.yml).  
 
 ---
+# Starting swarm cluster
 * When we join a docker engine host to a swarm cluster, we specify whether it should be a manager or worker.  
 * Most production swarm deployments should three or five manager nodes, more numbers equal more availability  
 but it takes more time for managers to acknowledge changes to cluster.  
@@ -11,14 +12,16 @@ but it takes more time for managers to acknowledge changes to cluster.
 TCP port 2377 for cluster management communications.  
 TCP/UDP port 7946 for communication among nodes.  
 UDP port 4789 for overlay network traffic.  
-
+* Also note, with encrypted overlay networks you will need to allow inbound traffic on the workers for the ESP protocol.
+```
+sudo ufw allow proto esp
+```
 ---
-# Starting swarm cluster
 * Initialize a new swarm:  
 ```
 docker swarm init --advertise-addr <HOSTIPADDRESS> --listen-addr <HOSTIPADDRESS>:2377
 ```
-docker swarm init: this tells Docker to initialize a new swarm and make this node the first manager. It also enables swarm mode on the node.  
+`docker swarm init` this tells Docker to initialize a new swarm and make this node the first manager. It also enables swarm mode on the node.  
 `--advertise-addr` As the name suggests, this is the swarm API endpoint that will be advertised to other nodes in the swarm.  
 It will usually be one of the node’s IP addresses, but can be an external load-balancer address. It’s an optional flag unless you want to  
 specify a load-balancer or specific IP address on a node with multiple interfaces.  
