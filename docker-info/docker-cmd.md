@@ -12,3 +12,9 @@ docker save (image name) | gzip > (file name).tar.gz
 of `docker save` in the command above to do the same thing.  
 
 ---
+# container not stopping or removing
+* when we want to delete or stop a running container but it doesnt work, we can restart its socket:  
+```
+sudo systemctl restart docker.socket
+```
+---
