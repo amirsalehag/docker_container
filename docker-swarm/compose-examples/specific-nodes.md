@@ -12,10 +12,10 @@ services:
         condition: on-failure
       placement:
         constraints:
-          - "node.labels.<added label>==true"
+          - "node.labels.<added label>==<its value>"
           - "node.role==worker"
 ```
-This means that we set the replication mode to global meaning that each of specified node only is going to have one nginx service, and the constraints means that it should we a worker and also has to have the `elasticsearch=true` label specified on the worker nodes.  
+This means that we set the replication mode to global meaning that each of specified node only is going to have one nginx service, and the constraints means that it should be a worker and it also has to have the `elasticsearch=true` label specified on the worker nodes.  
 * We can add labels to the nodes by this command:  
 ```
 docker node update <node hostname on cluster> --label-add elasticsearch=true
