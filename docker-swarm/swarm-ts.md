@@ -27,3 +27,13 @@ sudo systemctl start docker.service
 and then we can add it again, as manager or worker in the existing cluster.  
 
 ---
+# losing the quorum
+* If you lose the quorum of managers, you cannot administer the swarm. If you have lost the quorum and you attempt to perform any management operation on the swarm, an error occurs:  
+```
+Error response from daemon: rpc error: code = 4 desc = context deadline exceeded
+```
+The best way to recover from losing the quorum is to bring the failed nodes back online. If you can’t do that, the only way to recover from this state is to use the `--force-new-cluster` action from a manager node. This removes all managers except the manager the command was run from. The quorum is achieved because there is now only one manager. Promote nodes to be managers until you have the desired number of managers.  
+From the node to recover, run:  
+```
+docker swarm init --force-new-cluster --advertise-addr node01:2377
+```
